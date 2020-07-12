@@ -14,6 +14,7 @@
 		24746D9A24BB982800F879D6 /* ServiceManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 24746D9924BB982800F879D6 /* ServiceManager.m */; };
 		24746D9E24BB9AFE00F879D6 /* ViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24746D9D24BB9AFE00F879D6 /* ViewModel.m */; };
 		24746DA224BBA08500F879D6 /* LocationModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 24746DA124BBA08500F879D6 /* LocationModel.m */; };
+		24746DA424BBC99400F879D6 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 24746DA324BBC99300F879D6 /* README.md */; };
 		24A123AB24B63A600062806A /* CustomAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A123AA24B63A600062806A /* CustomAnnotation.m */; };
 		24A4F6D124BA2E72007823C8 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A4F6D024BA2E72007823C8 /* AlertManager.m */; };
 		24A4F6D924BA37AC007823C8 /* CLPlacemark+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A4F6D824BA37AC007823C8 /* CLPlacemark+Category.m */; };
@@ -40,6 +41,7 @@
 		24746D9D24BB9AFE00F879D6 /* ViewModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewModel.m; sourceTree = "<group>"; };
 		24746DA024BBA08500F879D6 /* LocationModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LocationModel.h; sourceTree = "<group>"; };
 		24746DA124BBA08500F879D6 /* LocationModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LocationModel.m; sourceTree = "<group>"; };
+		24746DA324BBC99300F879D6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = SOURCE_ROOT; };
 		24A123A924B63A600062806A /* CustomAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomAnnotation.h; sourceTree = "<group>"; };
 		24A123AA24B63A600062806A /* CustomAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotation.m; sourceTree = "<group>"; };
 		24A4F6CF24BA2E72007823C8 /* AlertManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AlertManager.h; sourceTree = "<group>"; };
@@ -248,6 +250,7 @@
 		24AF30D624B36A36009E04F7 /* ObjectiveCDemo */ = {
 			isa = PBXGroup;
 			children = (
+				24746DA324BBC99300F879D6 /* README.md */,
 				24A123A624B6398E0062806A /* Common */,
 				24A4F6DA24BA3A65007823C8 /* Model */,
 				24746D9B24BB9AE700F879D6 /* ViewModel */,
@@ -317,6 +320,7 @@
 			files = (
 				2471069724BA8FEF00AA12C5 /* CustomCalloutView.xib in Resources */,
 				24AF30E724B36A38009E04F7 /* LaunchScreen.storyboard in Resources */,
+				24746DA424BBC99400F879D6 /* README.md in Resources */,
 				24AF30E424B36A38009E04F7 /* Assets.xcassets in Resources */,
 				24AF30E224B36A36009E04F7 /* Main.storyboard in Resources */,
 			);
