@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina5_5" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="CustomCalloutView">
+            <rect key="frame" x="0.0" y="0.0" width="300" height="90"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fDu-Rd-nrZ">
+                    <rect key="frame" x="116" y="62" width="100" height="20"/>
+                    <color key="backgroundColor" red="1" green="0.30231204909999998" blue="0.46591637130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="lNA-d1-o13"/>
+                    </constraints>
+                    <state key="normal" title="Address">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="addressButtonTyped:" destination="iN0-l3-epB" eventType="touchUpInside" id="A1b-b6-kcq"/>
+                    </connections>
+                </button>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="house" translatesAutoresizingMaskIntoConstraints="NO" id="guk-hd-PJN">
+                    <rect key="frame" x="218" y="8" width="74" height="74"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="guk-hd-PJN" secondAttribute="height" multiplier="1:1" id="MIO-wP-x7g"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="107 Coffee Dessert" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yxE-t3-3Da">
+                    <rect key="frame" x="8" y="8" width="194" height="29"/>
+                    <fontDescription key="fontDescription" name="Noteworthy-Bold" family="Noteworthy" pointSize="18"/>
+                    <color key="textColor" red="0.01536292172" green="0.075540496129999996" blue="0.659601047" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" pointerInteraction="YES" translatesAutoresizingMaskIntoConstraints="NO" id="1uJ-py-DAY">
+                    <rect key="frame" x="8" y="62" width="100" height="20"/>
+                    <color key="backgroundColor" red="1" green="0.30231204909999998" blue="0.46591637130000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="100" id="C0x-ZA-goW"/>
+                    </constraints>
+                    <state key="normal" title="Coordinate">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="coordinateButtonTyped:" destination="iN0-l3-epB" eventType="touchUpInside" id="eba-2J-Zz3"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, this is Tina's cafe." textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J6A-lO-IPf">
+                    <rect key="frame" x="8" y="37" width="194" height="22"/>
+                    <fontDescription key="fontDescription" name="Kailasa" family="Kailasa" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.32486157100000002" blue="0.01796174482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" red="1" green="0.87104283199999999" blue="0.77903222049999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="guk-hd-PJN" firstAttribute="leading" secondItem="yxE-t3-3Da" secondAttribute="trailing" constant="16" id="9Mi-ZK-U6r"/>
+                <constraint firstItem="J6A-lO-IPf" firstAttribute="top" secondItem="yxE-t3-3Da" secondAttribute="bottom" id="EWF-Ff-GR4"/>
+                <constraint firstItem="1uJ-py-DAY" firstAttribute="top" secondItem="J6A-lO-IPf" secondAttribute="bottom" constant="3" id="PW7-lY-bdM"/>
+                <constraint firstItem="1uJ-py-DAY" firstAttribute="leading" secondItem="J6A-lO-IPf" secondAttribute="leading" id="Tnv-c1-jsB"/>
+                <constraint firstItem="J6A-lO-IPf" firstAttribute="leading" secondItem="yxE-t3-3Da" secondAttribute="leading" id="VnM-fp-YUG"/>
+                <constraint firstItem="fDu-Rd-nrZ" firstAttribute="height" secondItem="1uJ-py-DAY" secondAttribute="height" id="XDC-Ij-z8j"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="guk-hd-PJN" secondAttribute="trailing" constant="8" id="d4F-we-5sN"/>
+                <constraint firstItem="fDu-Rd-nrZ" firstAttribute="centerY" secondItem="1uJ-py-DAY" secondAttribute="centerY" id="fCC-JY-SaC"/>
+                <constraint firstItem="guk-hd-PJN" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="fe6-Iu-nAA"/>
+                <constraint firstItem="yxE-t3-3Da" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" constant="8" id="hcK-O6-g0H"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="1uJ-py-DAY" secondAttribute="bottom" constant="8" id="jhF-Ok-sG4"/>
+                <constraint firstItem="yxE-t3-3Da" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" constant="8" id="k11-c9-Xly"/>
+                <constraint firstItem="fDu-Rd-nrZ" firstAttribute="leading" secondItem="1uJ-py-DAY" secondAttribute="trailing" constant="8" id="kmy-N9-hQy"/>
+                <constraint firstItem="guk-hd-PJN" firstAttribute="leading" secondItem="J6A-lO-IPf" secondAttribute="trailing" constant="16" id="x2o-PN-Rwr"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="guk-hd-PJN" secondAttribute="bottom" constant="8" id="zMo-MU-3TR"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
+            <connections>
+                <outlet property="addressButton" destination="fDu-Rd-nrZ" id="7mY-RN-ObL"/>
+                <outlet property="coordinateButton" destination="1uJ-py-DAY" id="Nsy-c1-4r6"/>
+                <outlet property="myImageView" destination="guk-hd-PJN" id="DRE-F3-IiQ"/>
+                <outlet property="subtitleLabel" destination="J6A-lO-IPf" id="gnY-vu-A2M"/>
+                <outlet property="titleLabel" destination="yxE-t3-3Da" id="geQ-OT-wvo"/>
+            </connections>
+            <point key="canvasLocation" x="-211.59420289855075" y="66.84782608695653"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="house" width="256" height="213"/>
+    </resources>
+</document>
