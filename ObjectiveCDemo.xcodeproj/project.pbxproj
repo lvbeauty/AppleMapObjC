@@ -165,11 +165,6 @@
 		24A123A624B6398E0062806A /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				24AF30D724B36A36009E04F7 /* AppDelegate.h */,
-				24AF30D824B36A36009E04F7 /* AppDelegate.m */,
-				24AF30DA24B36A36009E04F7 /* SceneDelegate.h */,
-				24AF30DB24B36A36009E04F7 /* SceneDelegate.m */,
-				24AF30E924B36A38009E04F7 /* main.m */,
 				24A4F6CE24BA2E1B007823C8 /* Utilities */,
 				24746D9724BB980900F879D6 /* ServiceLayer */,
 			);
@@ -251,6 +246,11 @@
 			isa = PBXGroup;
 			children = (
 				24746DA324BBC99300F879D6 /* README.md */,
+				24AF30D724B36A36009E04F7 /* AppDelegate.h */,
+				24AF30D824B36A36009E04F7 /* AppDelegate.m */,
+				24AF30DA24B36A36009E04F7 /* SceneDelegate.h */,
+				24AF30DB24B36A36009E04F7 /* SceneDelegate.m */,
+				24AF30E924B36A38009E04F7 /* main.m */,
 				24A123A624B6398E0062806A /* Common */,
 				24A4F6DA24BA3A65007823C8 /* Model */,
 				24746D9B24BB9AE700F879D6 /* ViewModel */,

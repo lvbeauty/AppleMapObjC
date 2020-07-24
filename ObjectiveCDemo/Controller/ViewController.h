@@ -13,8 +13,6 @@
 
 @interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, CustomCalloutViewModelDelegate>
 
-
-
 @end
 
 

@@ -103,10 +103,10 @@
         }];
     }
     
-    dispatch_async(dispatch_get_main_queue(), ^{
-        CLLocation *honolulu = [[CLLocation alloc] initWithLatitude:21.2924730 longitude:-157.8229380];
-        [self setCameraForPosition:honolulu andRegionRadius:10000];
-    });
+//    dispatch_async(dispatch_get_main_queue(), ^{
+//        CLLocation *honolulu = [[CLLocation alloc] initWithLatitude:21.2924730 longitude:-157.8229380];
+//        [self setCameraForPosition:honolulu andRegionRadius:10000];
+//    });
 }
 
 -(void)centerToWithLocation: (CLLocation *)location andRegionRadius: (CLLocationDistance)regionRadius {
@@ -162,7 +162,7 @@
     if (!(mostAccurateLocation == previousAccurateLocation)) {
         previousAccurateLocation = mostAccurateLocation;
         
-        [[AlertManager manager] alertWithTitle:@"LOCATION INFO" andMessage:[mostAccurateLocation description] andController:self];
+        [[AlertManager manager] alertWithTitle:@"LOCATION INFO" message:[mostAccurateLocation description] andController:self];
         [manager stopMonitoringSignificantLocationChanges];
         [manager startMonitoringSignificantLocationChanges];
     }
@@ -172,7 +172,7 @@
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     
-    [[AlertManager manager] alertWithTitle:@"Error" andMessage:[error localizedDescription] andController:self];
+    [[AlertManager manager] alertWithTitle:@"Error" message:[error localizedDescription] andController:self];
 }
 
 //MARK: - Callout View Delegate Methods
@@ -190,11 +190,11 @@
     [coordint appendString:@"Longitude: "];
     [coordint appendString:longitude];
     
-    [[AlertManager manager] alertWithTitle:@"Coordinate" andMessage:coordint andController:self];
+    [[AlertManager manager] alertWithTitle:@"Coordinate" message:coordint andController:self];
 }
 
 - (void)addressButtonTappedWithTitle:(NSString *)title :(NSString *)address {
-    [[AlertManager manager] alertWithTitle:title andMessage:address andController:self];
+    [[AlertManager manager] alertWithTitle:title message:address andController:self];
 }
 
 //MARK: - Geocoder Methods

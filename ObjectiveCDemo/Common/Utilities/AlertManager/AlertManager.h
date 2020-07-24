@@ -13,8 +13,8 @@ NS_ASSUME_NONNULL_BEGIN
 @interface AlertManager : NSObject
 
 + (instancetype)manager;
-
-- (void)alertWithTitle: (NSString *)title andMessage:(NSString *)message andController:(UIViewController *)controller;
+//and only with the last parameters;
+- (void)alertWithTitle: (NSString *)title message:(NSString *)message andController:(UIViewController *)controller;
 
 @end
 

@@ -27,7 +27,7 @@
     return self;
 }
 
-- (void)alertWithTitle:(NSString *)title andMessage:(NSString *)message andController:(UIViewController *)controller {
+- (void)alertWithTitle:(NSString *)title message:(NSString *)message andController:(UIViewController *)controller {
     UIAlertController *alertController = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleDefault handler:nil];
     [alertController addAction:okAction];
