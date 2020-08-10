@@ -13,20 +13,12 @@
 
 @end
 
-@implementation TableViewController
+@implementation TableViewController {
+    NSArray<MKMapItem *> *matchingItems;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-}
-
-@synthesize tableView;
-
-- (void)setTableView:(UITableView *)inTableView
-{
-    if (!inTableView) {
-        return;
-    }
-    [super setTableView:inTableView];
 }
 
 #pragma mark - Table view data source
@@ -36,7 +28,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return _matchingItems.count;
+    return matchingItems.count;
 }
 
 - (void)updateSearchResultsForSearchController:(UISearchController *)searchController {
@@ -47,7 +39,7 @@
         MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
         [search startWithCompletionHandler:^(MKLocalSearchResponse * _Nullable response, NSError * _Nullable error) {
             if (response != nil) {
-                self->_matchingItems = [response mapItems];
+                self->matchingItems = [response mapItems];
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [self.tableView reloadData];
                 });
@@ -60,15 +52,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"cell" forIndexPath:indexPath];
     
-    cell.textLabel.text = [_matchingItems objectAtIndex:indexPath.row].name;
-    cell.detailTextLabel.text = [_matchingItems objectAtIndex:indexPath.row].placemark.completeAddress;
+    cell.textLabel.text = [matchingItems objectAtIndex:indexPath.row].name;
+    cell.detailTextLabel.text = [matchingItems objectAtIndex:indexPath.row].placemark.completeAddress;
     
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    MKPlacemark *selectItem = [_matchingItems objectAtIndex:indexPath.row].placemark;
-    [_handleMapSearchDelegate dropPinZoomInPlaceMark:selectItem];
+    MKMapItem *selectItem = [matchingItems objectAtIndex:indexPath.row];
+    [_delegate dropPinZoomInPlaceMark:selectItem];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

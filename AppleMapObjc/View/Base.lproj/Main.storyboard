@@ -28,7 +28,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="3cA-aR-rWJ"/>
+                    <navigationItem key="navigationItem" id="3cA-aR-rWJ">
+                        <barButtonItem key="leftBarButtonItem" title="Item" image="location.fill" catalog="system" id="2ge-xB-12P">
+                            <color key="tintColor" red="1" green="0.32486157100000002" blue="0.01796174482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                            <connections>
+                                <action selector="centerToUserLocationButtonTapped:" destination="BYZ-38-t0r" id="5Jr-Jn-EiL"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="mapView" destination="wnR-x5-ccC" id="Iwv-0N-yRV"/>
                     </connections>
@@ -100,4 +107,7 @@
             <point key="canvasLocation" x="131.8840579710145" y="107.8125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="location.fill" catalog="system" width="128" height="115"/>
+    </resources>
 </document>

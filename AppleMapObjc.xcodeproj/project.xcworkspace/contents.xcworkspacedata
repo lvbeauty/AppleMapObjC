@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:ObjectiveCDemo.xcodeproj">
+      location = "self:/Users/tong_y/Documents/Project/DemoProject/AppleMapObjC/AppleMapObjc.xcodeproj">
    </FileRef>
 </Workspace>

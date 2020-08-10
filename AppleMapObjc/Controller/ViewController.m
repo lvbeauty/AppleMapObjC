@@ -14,6 +14,7 @@
 #import "CustomAnnotationView.h"
 #import "ViewModel.h"
 #import "LocationModel.h"
+#import "MKMapView+Category.h"
 //#import <CoreLocation/CoreLocation.h> // framework // h file and m file, either of them has the framework h
 
 @interface ViewController ()
@@ -66,12 +67,12 @@
 - (void)setupUI {
     TableViewController *locationSearchTable = (TableViewController *)[[self storyboard] instantiateViewControllerWithIdentifier:@"TableViewController"];
     locationSearchTable.mapView = mapView;
-    locationSearchTable.handleMapSearchDelegate = self;
+    locationSearchTable.delegate = self;
     searchController = [[UISearchController alloc] initWithSearchResultsController:locationSearchTable];
     searchController.searchResultsUpdater = (id)locationSearchTable;
     [[searchController searchBar] sizeToFit];
     [searchController searchBar].placeholder = @"Search For Places";
-//    [searchController searchBar].delegate = self;
+    [searchController searchBar].delegate = self;
     [searchController searchBar].scopeButtonTitles = @[@"Standard", @"Satellite", @"Hybrid"];
     [searchController searchBar].showsScopeBar = true;
     [self navigationItem].searchController = searchController;
@@ -112,6 +113,11 @@
     }];
     
 }
+
+- (IBAction)centerToUserLocationButtonTapped:(id)sender {
+    [mapView centerToUserLocation];
+}
+
 
 - (void)remoteDataShowingOnTheMap {
     for (LocationModel *data in viewModel.dataSource) {
@@ -317,8 +323,53 @@
     
 }
 
-////MARK: - Search Bar Delegate Methods
-//
+//MARK: - Handle Map Search Delegate Methods
+
+- (void)dropPinZoomInPlaceMark:(MKMapItem *)mapItem {
+//    selectedPin = placeMark;
+    [mapView removeAnnotations:mapView.annotations];
+//    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+//    annotation.coordinate = placeMark.coordinate;
+//    annotation.title = placeMark.name;
+//    NSString *city = placeMark.locality;
+//    NSString *state = placeMark.administrativeArea;
+//    annotation.subtitle = [NSString stringWithFormat:@"%@, %@", city, state];
+//    [mapView addAnnotation:annotation];
+    
+    CLLocationCoordinate2D coordinate = [[mapItem placemark] coordinate];
+    [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
+        NSString *address = [placemark completeAddress];
+
+        dispatch_async(dispatch_get_main_queue(), ^{
+            CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[mapItem name] :[mapItem phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
+
+            [self->mapView addAnnotation:(id)annotation];
+        });
+        }];
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
+    [mapView setRegion:MKCoordinateRegionMake(coordinate, span) animated:YES];
+}
+
+
+//MARK: - Search Bar Delegate Methods
+
+- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+    switch ([searchBar selectedScopeButtonIndex]) {
+        case 0:
+            mapView.mapType = MKMapTypeStandard;
+            break;
+        case 1:
+            mapView.mapType = MKMapTypeSatellite;
+            break;
+        case 2:
+            mapView.mapType = MKMapTypeHybrid;
+            break;
+            
+        default:
+            break;
+    }
+}
 //- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
 //    if (!(waitingblock == nil)) {
 //        dispatch_block_cancel(waitingblock);
@@ -355,22 +406,7 @@
 //    }
 //}
 //
-//- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-//    switch ([searchBar selectedScopeButtonIndex]) {
-//        case 0:
-//            mapView.mapType = MKMapTypeStandard;
-//            break;
-//        case 1:
-//            mapView.mapType = MKMapTypeSatellite;
-//            break;
-//        case 2:
-//            mapView.mapType = MKMapTypeHybrid;
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}
+
 
 //- (void)performSearchByUsing: (NSString *)searchText {
 //    [item removeAllObjects];
@@ -398,22 +434,6 @@
 //        }
 //    }];
 //}
-
-//MARK: - Handle Map Search Delegate Methods
-
-- (void)dropPinZoomInPlaceMark:(MKPlacemark *)placeMark {
-    selectedPin = placeMark;
-    [mapView removeAnnotations:mapView.annotations];
-    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
-    annotation.coordinate = placeMark.coordinate;
-    annotation.title = placeMark.name;
-    NSString *city = placeMark.locality;
-    NSString *state = placeMark.administrativeArea;
-    annotation.subtitle = [NSString stringWithFormat:@"%@, %@", city, state];
-    [mapView addAnnotation:annotation];
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
-    [mapView setRegion:MKCoordinateRegionMake(placeMark.coordinate, span) animated:YES];
-}
 
 @end
 

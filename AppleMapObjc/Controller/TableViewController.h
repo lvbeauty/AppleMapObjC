@@ -14,9 +14,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface TableViewController : UITableViewController <UISearchResultsUpdating, UITableViewDelegate, UITableViewDataSource>
 
-@property (strong, nonatomic) NSArray<MKMapItem *> *matchingItems;
-@property (nonatomic) MKMapView *mapView;
-@property (weak, nonatomic) NSObject<HandleMapSearch> *handleMapSearchDelegate;
+@property (nonatomic, strong) MKMapView *mapView;
+@property (nonatomic, weak) id <HandleMapSearch> delegate;
 
 @end
 

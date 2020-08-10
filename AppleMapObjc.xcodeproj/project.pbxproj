@@ -19,6 +19,7 @@
 		24A4F6D124BA2E72007823C8 /* AlertManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A4F6D024BA2E72007823C8 /* AlertManager.m */; };
 		24A4F6D924BA37AC007823C8 /* CLPlacemark+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A4F6D824BA37AC007823C8 /* CLPlacemark+Category.m */; };
 		24A7105824E0FE5B00EBAF8D /* TableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A7105724E0FE5B00EBAF8D /* TableViewController.m */; };
+		24A7105C24E1332200EBAF8D /* MKMapView+Category.m in Sources */ = {isa = PBXBuildFile; fileRef = 24A7105B24E1332200EBAF8D /* MKMapView+Category.m */; };
 		24AF30D924B36A36009E04F7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AF30D824B36A36009E04F7 /* AppDelegate.m */; };
 		24AF30DC24B36A36009E04F7 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AF30DB24B36A36009E04F7 /* SceneDelegate.m */; };
 		24AF30DF24B36A36009E04F7 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 24AF30DE24B36A36009E04F7 /* ViewController.m */; };
@@ -55,7 +56,9 @@
 		24A7105624E0FE5B00EBAF8D /* TableViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TableViewController.h; sourceTree = "<group>"; };
 		24A7105724E0FE5B00EBAF8D /* TableViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TableViewController.m; sourceTree = "<group>"; };
 		24A7105924E1146B00EBAF8D /* HandleMapSearch.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HandleMapSearch.h; sourceTree = "<group>"; };
-		24AF30D424B36A36009E04F7 /* ObjectiveCDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ObjectiveCDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		24A7105A24E1332200EBAF8D /* MKMapView+Category.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "MKMapView+Category.h"; sourceTree = "<group>"; };
+		24A7105B24E1332200EBAF8D /* MKMapView+Category.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "MKMapView+Category.m"; sourceTree = "<group>"; };
+		24AF30D424B36A36009E04F7 /* AppleMapObjc.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleMapObjc.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		24AF30D724B36A36009E04F7 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		24AF30D824B36A36009E04F7 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		24AF30DA24B36A36009E04F7 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
@@ -200,6 +203,8 @@
 			children = (
 				24A4F6D724BA37AC007823C8 /* CLPlacemark+Category.h */,
 				24A4F6D824BA37AC007823C8 /* CLPlacemark+Category.m */,
+				24A7105A24E1332200EBAF8D /* MKMapView+Category.h */,
+				24A7105B24E1332200EBAF8D /* MKMapView+Category.m */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -236,7 +241,7 @@
 		24AF30CB24B36A36009E04F7 = {
 			isa = PBXGroup;
 			children = (
-				24AF30D624B36A36009E04F7 /* ObjectiveCDemo */,
+				24AF30D624B36A36009E04F7 /* AppleMapObjc */,
 				24AF30D524B36A36009E04F7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -244,12 +249,12 @@
 		24AF30D524B36A36009E04F7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				24AF30D424B36A36009E04F7 /* ObjectiveCDemo.app */,
+				24AF30D424B36A36009E04F7 /* AppleMapObjc.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		24AF30D624B36A36009E04F7 /* ObjectiveCDemo */ = {
+		24AF30D624B36A36009E04F7 /* AppleMapObjc */ = {
 			isa = PBXGroup;
 			children = (
 				24746DA324BBC99300F879D6 /* README.md */,
@@ -265,15 +270,15 @@
 				24A123A424B6380D0062806A /* Controller */,
 				24A123A324B637DB0062806A /* Support */,
 			);
-			path = ObjectiveCDemo;
+			path = AppleMapObjc;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		24AF30D324B36A36009E04F7 /* ObjectiveCDemo */ = {
+		24AF30D324B36A36009E04F7 /* AppleMapObjc */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 24AF30ED24B36A38009E04F7 /* Build configuration list for PBXNativeTarget "ObjectiveCDemo" */;
+			buildConfigurationList = 24AF30ED24B36A38009E04F7 /* Build configuration list for PBXNativeTarget "AppleMapObjc" */;
 			buildPhases = (
 				24AF30D024B36A36009E04F7 /* Sources */,
 				24AF30D124B36A36009E04F7 /* Frameworks */,
@@ -283,9 +288,9 @@
 			);
 			dependencies = (
 			);
-			name = ObjectiveCDemo;
+			name = AppleMapObjc;
 			productName = ObjectiveCDemo;
-			productReference = 24AF30D424B36A36009E04F7 /* ObjectiveCDemo.app */;
+			productReference = 24AF30D424B36A36009E04F7 /* AppleMapObjc.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -302,7 +307,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 24AF30CF24B36A36009E04F7 /* Build configuration list for PBXProject "ObjectiveCDemo" */;
+			buildConfigurationList = 24AF30CF24B36A36009E04F7 /* Build configuration list for PBXProject "AppleMapObjc" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -315,7 +320,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				24AF30D324B36A36009E04F7 /* ObjectiveCDemo */,
+				24AF30D324B36A36009E04F7 /* AppleMapObjc */,
 			);
 		};
 /* End PBXProject section */
@@ -341,6 +346,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				24A4F6D124BA2E72007823C8 /* AlertManager.m in Sources */,
+				24A7105C24E1332200EBAF8D /* MKMapView+Category.m in Sources */,
 				24746DA224BBA08500F879D6 /* LocationModel.m in Sources */,
 				24A123AB24B63A600062806A /* CustomAnnotation.m in Sources */,
 				2471069224BA8FB200AA12C5 /* CustomAnnotationView.m in Sources */,
@@ -524,7 +530,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		24AF30CF24B36A36009E04F7 /* Build configuration list for PBXProject "ObjectiveCDemo" */ = {
+		24AF30CF24B36A36009E04F7 /* Build configuration list for PBXProject "AppleMapObjc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24AF30EB24B36A38009E04F7 /* Debug */,
@@ -533,7 +539,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		24AF30ED24B36A38009E04F7 /* Build configuration list for PBXNativeTarget "ObjectiveCDemo" */ = {
+		24AF30ED24B36A38009E04F7 /* Build configuration list for PBXNativeTarget "AppleMapObjc" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				24AF30EE24B36A38009E04F7 /* Debug */,

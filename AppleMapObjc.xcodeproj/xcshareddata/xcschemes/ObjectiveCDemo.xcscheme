@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "24AF30D324B36A36009E04F7"
-               BuildableName = "ObjectiveCDemo.app"
-               BlueprintName = "ObjectiveCDemo"
-               ReferencedContainer = "container:ObjectiveCDemo.xcodeproj">
+               BuildableName = "AppleMapObjc.app"
+               BlueprintName = "AppleMapObjc"
+               ReferencedContainer = "container:AppleMapObjc.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "24AF30D324B36A36009E04F7"
-            BuildableName = "ObjectiveCDemo.app"
-            BlueprintName = "ObjectiveCDemo"
-            ReferencedContainer = "container:ObjectiveCDemo.xcodeproj">
+            BuildableName = "AppleMapObjc.app"
+            BlueprintName = "AppleMapObjc"
+            ReferencedContainer = "container:AppleMapObjc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "24AF30D324B36A36009E04F7"
-            BuildableName = "ObjectiveCDemo.app"
-            BlueprintName = "ObjectiveCDemo"
-            ReferencedContainer = "container:ObjectiveCDemo.xcodeproj">
+            BuildableName = "AppleMapObjc.app"
+            BlueprintName = "AppleMapObjc"
+            ReferencedContainer = "container:AppleMapObjc.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
