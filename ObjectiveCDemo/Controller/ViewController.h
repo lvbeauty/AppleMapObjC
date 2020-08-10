@@ -10,8 +10,10 @@
 #import <CoreLocation/CoreLocation.h>
 #import <MapKit/MapKit.h>
 #import "CustomCalloutViewModelDelegate.h"
+#import "TableViewController.h"
+#import "HandleMapSearch.h"
 
-@interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, CustomCalloutViewModelDelegate>
+@interface ViewController : UIViewController <CLLocationManagerDelegate, MKMapViewDelegate, UISearchBarDelegate, CustomCalloutViewModelDelegate, HandleMapSearch>
 
 @end
 

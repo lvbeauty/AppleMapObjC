@@ -76,4 +76,11 @@
     return view;
 }
 
+
+
+- (CGRect)getRectForEquilateralTriangleRelatedToHight: (CGFloat)height {
+    CGFloat width = (height / pow(3, 1/2)) * 2;
+    return CGRectMake(0, 0, width, height);
+}
+
 @end

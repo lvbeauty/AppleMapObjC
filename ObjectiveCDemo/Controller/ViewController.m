@@ -31,6 +31,7 @@
     NSMutableArray *item;
     NSString *pinID;
     ViewModel *viewModel;
+    MKPlacemark *selectedPin;
 }
 
 - (void)viewDidLoad {
@@ -45,6 +46,7 @@
 - (void)setupLocationManager {
     manager = [[CLLocationManager alloc] init];
     manager.desiredAccuracy = kCLLocationAccuracyBest;
+    manager.pausesLocationUpdatesAutomatically = YES;
     manager.delegate = self;
 }
 
@@ -56,16 +58,26 @@
     mapView.pitchEnabled = true;
     mapView.showsUserLocation = true;
     mapView.userTrackingMode = MKUserTrackingModeFollowWithHeading;
+    
+    UILongPressGestureRecognizer * longpress =[[UILongPressGestureRecognizer alloc]initWithTarget:self action: @selector(click:)];
+    [mapView addGestureRecognizer:longpress];
 }
 
 - (void)setupUI {
-    searchController = [[UISearchController alloc] initWithSearchResultsController:nil];
+    TableViewController *locationSearchTable = (TableViewController *)[[self storyboard] instantiateViewControllerWithIdentifier:@"TableViewController"];
+    locationSearchTable.mapView = mapView;
+    locationSearchTable.handleMapSearchDelegate = self;
+    searchController = [[UISearchController alloc] initWithSearchResultsController:locationSearchTable];
+    searchController.searchResultsUpdater = (id)locationSearchTable;
     [[searchController searchBar] sizeToFit];
-    [searchController searchBar].delegate = self;
+    [searchController searchBar].placeholder = @"Search For Places";
+//    [searchController searchBar].delegate = self;
     [searchController searchBar].scopeButtonTitles = @[@"Standard", @"Satellite", @"Hybrid"];
     [searchController searchBar].showsScopeBar = true;
-    searchController.hidesNavigationBarDuringPresentation = false;
     [self navigationItem].searchController = searchController;
+    searchController.hidesNavigationBarDuringPresentation = false;
+    searchController.obscuresBackgroundDuringPresentation = YES;
+    searchController.definesPresentationContext = YES;
 }
 
 - (void)setupDataSource {
@@ -73,6 +85,32 @@
     [viewModel fetchLocationDataWithCompletionHandler:^{
         [self remoteDataShowingOnTheMap];
     }];
+}
+
+- (void)click: (UILongPressGestureRecognizer *)recognizer {
+    [manager startUpdatingLocation];
+    CGPoint point = [recognizer locationInView:mapView];
+    CLLocationCoordinate2D coor = [mapView convertPoint:point toCoordinateFromView:mapView];
+    
+    NSLog(@"latitude: %g, logitude: %g", coor.latitude, coor.longitude);
+    
+    MKPointAnnotation *pointAnnotation = [[MKPointAnnotation alloc] init];
+    pointAnnotation.coordinate = coor;
+    
+    [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coor orAddress:nil completeHander:^(CLPlacemark *placemark) {
+        NSString *address = [placemark completeAddress];
+        
+        pointAnnotation.title = [NSString stringWithFormat:@"latitude: %g, logitude: %g", coor.latitude, coor.longitude];
+        pointAnnotation.subtitle = address;
+        
+        [self centerToWithLocation:placemark.location andRegionRadius:10000];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self->mapView removeAnnotations:[self->mapView annotations]];
+            [self->mapView addAnnotation:(id)pointAnnotation];
+        });
+    }];
+    
 }
 
 - (void)remoteDataShowingOnTheMap {
@@ -130,6 +168,7 @@
         case kCLAuthorizationStatusRestricted:
             break;
         case kCLAuthorizationStatusDenied:
+            [manager requestWhenInUseAuthorization];
             break;
         case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusAuthorizedWhenInUse:
@@ -239,6 +278,21 @@
         }
         
         return annottionView;
+    } else if ([annotation isKindOfClass:[MKPointAnnotation class]]){
+        NSString *pointPinID = @"_PointAnnotationID";
+        
+        MKPointAnnotation *myAnnotation = (MKPointAnnotation *)annotation;
+        MKPinAnnotationView *annotationView = (MKPinAnnotationView *)[mapView dequeueReusableAnnotationViewWithIdentifier:pointPinID];
+        
+        if (annotationView == nil) {
+            annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:myAnnotation reuseIdentifier:pointPinID];
+            
+            annotationView.annotation = myAnnotation;
+            annotationView.animatesDrop = YES;
+            annotationView.canShowCallout = true;
+        }
+        
+        return annotationView;
     }
     
     return nil;
@@ -263,86 +317,102 @@
     
 }
 
-//MARK: - Search Bar Delegate Methods
-
-- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
-    if (!(waitingblock == nil)) {
-        dispatch_block_cancel(waitingblock);
-    }
-  
-    dispatch_block_t work = dispatch_block_create(0, ^{
-        [searchBar resignFirstResponder];
-        NSString *searchText = [[searchBar text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-        if (![searchText isEqual: @""]) {
-            [self->mapView removeAnnotations:[self->mapView annotations]];
-            [self performSearchByUsing:searchText];
-            searchBar.placeholder = searchText;
-        } else {
-            searchBar.placeholder = @"Search";
-        }
-    });
-    
-    waitingblock = work;
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), waitingblock);
-}
-
+////MARK: - Search Bar Delegate Methods
+//
+//- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
+//    if (!(waitingblock == nil)) {
+//        dispatch_block_cancel(waitingblock);
+//    }
+//  
+//    dispatch_block_t work = dispatch_block_create(0, ^{
+//        [searchBar resignFirstResponder];
+//        NSString *searchText = [[searchBar text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//        if (![searchText isEqual: @""]) {
+//            [self->mapView removeAnnotations:[self->mapView annotations]];
+//            [self performSearchByUsing:searchText];
+//            searchBar.placeholder = searchText;
+//        } else {
+//            searchBar.placeholder = @"Search";
+//        }
+//    });
+//    
+//    waitingblock = work;
+//    
+//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3 * NSEC_PER_SEC)), dispatch_get_main_queue(), waitingblock);
+//}
+//
 //- (void)searchBarTextDidBeginEditing:(UISearchBar *)searchBar {
 //    [mapView removeAnnotations:[mapView annotations]];
 //}
+//
+//- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
+//    [searchBar resignFirstResponder];
+//    
+//    NSString *searchText = [[searchBar text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
+//    
+//    if (![searchText isEqual: @""]) {
+//        [self performSearchByUsing:searchText];
+//    }
+//}
+//
+//- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
+//    switch ([searchBar selectedScopeButtonIndex]) {
+//        case 0:
+//            mapView.mapType = MKMapTypeStandard;
+//            break;
+//        case 1:
+//            mapView.mapType = MKMapTypeSatellite;
+//            break;
+//        case 2:
+//            mapView.mapType = MKMapTypeHybrid;
+//            break;
+//            
+//        default:
+//            break;
+//    }
+//}
 
-- (void)searchBarSearchButtonClicked:(UISearchBar *)searchBar {
-    [searchBar resignFirstResponder];
-    
-    NSString *searchText = [[searchBar text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-    
-    if (![searchText isEqual: @""]) {
-        [self performSearchByUsing:searchText];
-    }
-}
+//- (void)performSearchByUsing: (NSString *)searchText {
+//    [item removeAllObjects];
+//    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+//    request.naturalLanguageQuery = searchText;
+//    request.region = [mapView region];
+//    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+//    [search startWithCompletionHandler:^(MKLocalSearchResponse * _Nullable response, NSError * _Nullable error) {
+//        if (error == nil && !([[response mapItems] count] == 0)) {
+//
+//            NSLog(@"%lu", (unsigned long)[[response mapItems] count]);
+//
+//            for (id object in [response mapItems]) {
+//                CLLocationCoordinate2D coordinate = [[object placemark] coordinate];
+//                [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
+//                    NSString *address = [placemark completeAddress];
+//
+//                    dispatch_async(dispatch_get_main_queue(), ^{
+//                        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[object name] :[object phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
+//
+//                        [self->mapView addAnnotation:(id)annotation];
+//                    });
+//                }];
+//            }
+//        }
+//    }];
+//}
 
-- (void)searchBar:(UISearchBar *)searchBar selectedScopeButtonIndexDidChange:(NSInteger)selectedScope {
-    switch ([searchBar selectedScopeButtonIndex]) {
-        case 0:
-            mapView.mapType = MKMapTypeStandard;
-            break;
-        case 1:
-            mapView.mapType = MKMapTypeSatellite;
-            break;
-        case 2:
-            mapView.mapType = MKMapTypeHybrid;
-            break;
-            
-        default:
-            break;
-    }
-}
+//MARK: - Handle Map Search Delegate Methods
 
-- (void)performSearchByUsing: (NSString *)searchText {
-    [item removeAllObjects];
-    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-    request.naturalLanguageQuery = searchText;
-    request.region = [mapView region];
-    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
-    [search startWithCompletionHandler:^(MKLocalSearchResponse * _Nullable response, NSError * _Nullable error) {
-        if (error == nil && !([[response mapItems] count] == 0)) {
-            
-            NSLog(@"%lu", (unsigned long)[[response mapItems] count]);
-            
-            for (id object in [response mapItems]) {
-                CLLocationCoordinate2D coordinate = [[object placemark] coordinate];
-                [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
-                    NSString *address = [placemark completeAddress];
-                    
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[object name] :[object phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
-
-                        [self->mapView addAnnotation:(id)annotation];
-                    });
-                }];
-            }
-        }
-    }];
+- (void)dropPinZoomInPlaceMark:(MKPlacemark *)placeMark {
+    selectedPin = placeMark;
+    [mapView removeAnnotations:mapView.annotations];
+    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
+    annotation.coordinate = placeMark.coordinate;
+    annotation.title = placeMark.name;
+    NSString *city = placeMark.locality;
+    NSString *state = placeMark.administrativeArea;
+    annotation.subtitle = [NSString stringWithFormat:@"%@, %@", city, state];
+    [mapView addAnnotation:annotation];
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
+    [mapView setRegion:MKCoordinateRegionMake(placeMark.coordinate, span) animated:YES];
 }
 
 @end
