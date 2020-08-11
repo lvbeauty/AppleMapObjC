@@ -8,6 +8,22 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="96F-Vp-HHy">
+            <objects>
+                <viewController id="2e9-DK-nGd" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="78g-ve-0gF">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="v6C-1c-qvN"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ieq-fs-u10"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dF3-jh-qe5" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="571" y="838"/>
+        </scene>
+        <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
@@ -35,14 +51,69 @@
                                 <action selector="centerToUserLocationButtonTapped:" destination="BYZ-38-t0r" id="5Jr-Jn-EiL"/>
                             </connections>
                         </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" image="map" catalog="system" id="0cY-86-QK0">
+                                <color key="tintColor" red="1" green="0.32486157100000002" blue="0.01796174482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <segue destination="4AF-81-E1o" kind="show" id="m1b-0e-q3F"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Direction" id="eoe-wq-JOO">
+                                <color key="tintColor" red="1" green="0.32486157100000002" blue="0.01796174482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <connections>
+                                    <action selector="directionButtonTapped:" destination="BYZ-38-t0r" id="mjY-KA-5rX"/>
+                                    <segue destination="2e9-DK-nGd" kind="show" id="suV-Wm-Dxx"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="directionButton" destination="eoe-wq-JOO" id="u6q-RQ-krb"/>
                         <outlet property="mapView" destination="wnR-x5-ccC" id="Iwv-0N-yRV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1042.0289855072465" y="107.8125"/>
+            <point key="canvasLocation" x="1048" y="108"/>
+        </scene>
+        <!--Region Monitoring: 0-->
+        <scene sceneID="nzK-F9-Bu9">
+            <objects>
+                <viewController id="4AF-81-E1o" customClass="RegionMonitorViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="C8i-e2-dfE">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="eob-Pk-YVg">
+                                <rect key="frame" x="0.0" y="88" width="414" height="774"/>
+                                <connections>
+                                    <outlet property="delegate" destination="4AF-81-E1o" id="tNd-3I-Pdh"/>
+                                </connections>
+                            </mapView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="eob-Pk-YVg" firstAttribute="leading" secondItem="XTb-TA-ODB" secondAttribute="leading" id="Kyl-1e-bSb"/>
+                            <constraint firstItem="eob-Pk-YVg" firstAttribute="top" secondItem="XTb-TA-ODB" secondAttribute="top" id="PqV-Pb-nJb"/>
+                            <constraint firstItem="XTb-TA-ODB" firstAttribute="bottom" secondItem="eob-Pk-YVg" secondAttribute="bottom" id="lG6-L3-pgd"/>
+                            <constraint firstItem="XTb-TA-ODB" firstAttribute="trailing" secondItem="eob-Pk-YVg" secondAttribute="trailing" id="xG7-H6-Y3I"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="XTb-TA-ODB"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Region Monitoring: 0" id="ZMO-Vf-Rux">
+                        <barButtonItem key="rightBarButtonItem" image="location.fill" catalog="system" id="8d0-HA-f44">
+                            <connections>
+                                <action selector="zoomButtonTapped:" destination="4AF-81-E1o" id="qhe-Oj-Q7j"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="mapView" destination="eob-Pk-YVg" id="cFE-RY-c7I"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3iN-wW-bMa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1529" y="838"/>
         </scene>
         <!--Table View Controller-->
         <scene sceneID="Lb2-1d-AHW">
@@ -96,6 +167,7 @@
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="X71-TL-tR8">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="tintColor" red="1" green="0.32486157100000002" blue="0.01796174482" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -109,5 +181,6 @@
     </scenes>
     <resources>
         <image name="location.fill" catalog="system" width="128" height="115"/>
+        <image name="map" catalog="system" width="128" height="113"/>
     </resources>
 </document>

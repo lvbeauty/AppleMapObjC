@@ -37,7 +37,7 @@
         
         for (NSDictionary *jsonDict in json) {
             NSString *creator = jsonDict[@"creator"];
-            NSString *locat = jsonDict[@"locat"];
+            NSString *locat = jsonDict[@"location"];
             NSString *latitude = jsonDict[@"latitude"];
             NSString *longitude = jsonDict[@"longitude"];
             [self.dataSource addObject:[[LocationModel alloc] initWithCreater:creator andLocate:locat andLatitude:latitude andLongitude:longitude]];

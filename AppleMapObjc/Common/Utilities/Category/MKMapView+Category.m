@@ -12,7 +12,7 @@
 
 - (void)centerToUserLocation {
     CLLocationCoordinate2D coordinate = [self userLocation].location.coordinate;
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.1, 0.1);
     MKCoordinateRegion region = MKCoordinateRegionMake(coordinate, span);
     [self setRegion:region animated:YES];
 }

@@ -15,6 +15,7 @@
 #import "ViewModel.h"
 #import "LocationModel.h"
 #import "MKMapView+Category.h"
+#import <CoreGraphics/CoreGraphics.h>
 //#import <CoreLocation/CoreLocation.h> // framework // h file and m file, either of them has the framework h
 
 @interface ViewController ()
@@ -23,21 +24,25 @@
 
 @implementation ViewController {
     __weak IBOutlet MKMapView *mapView;
+    __weak IBOutlet UIBarButtonItem *directionButton;
     
     CLLocationManager *manager;
     CLLocation *mostAccurateLocation;
     CLLocation *previousAccurateLocation;
+    CLLocation *longPressPointLocation;
     UISearchController *searchController;
     dispatch_block_t waitingblock;
     NSMutableArray *item;
     NSString *pinID;
     ViewModel *viewModel;
     MKPlacemark *selectedPin;
+    MKMapItem *destinationMapItem;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self checkAuthorition];
     [self setupDataSource];
     [self setupUI];
     [self setupLocationManager];
@@ -48,6 +53,7 @@
     manager = [[CLLocationManager alloc] init];
     manager.desiredAccuracy = kCLLocationAccuracyBest;
     manager.pausesLocationUpdatesAutomatically = YES;
+    manager.distanceFilter = 100;
     manager.delegate = self;
 }
 
@@ -64,7 +70,33 @@
     [mapView addGestureRecognizer:longpress];
 }
 
+- (void)checkAuthorition {
+    CLAuthorizationStatus status = CLLocationManager.authorizationStatus;
+    switch (status) {
+        case kCLAuthorizationStatusNotDetermined:
+            [manager requestWhenInUseAuthorization];
+            break;
+        case kCLAuthorizationStatusRestricted:
+            [manager requestWhenInUseAuthorization];
+            break;
+        case kCLAuthorizationStatusDenied:
+            [manager requestWhenInUseAuthorization];
+            break;
+        case kCLAuthorizationStatusAuthorizedAlways:
+            [self setupDataSource];
+            [manager startUpdatingLocation];
+            break;
+        case kCLAuthorizationStatusAuthorizedWhenInUse:
+            [manager requestAlwaysAuthorization];
+            break;
+        default:
+            break;
+    }
+}
+
+
 - (void)setupUI {
+    self.title = @"Apple Map";
     TableViewController *locationSearchTable = (TableViewController *)[[self storyboard] instantiateViewControllerWithIdentifier:@"TableViewController"];
     locationSearchTable.mapView = mapView;
     locationSearchTable.delegate = self;
@@ -92,6 +124,16 @@
     [manager startUpdatingLocation];
     CGPoint point = [recognizer locationInView:mapView];
     CLLocationCoordinate2D coor = [mapView convertPoint:point toCoordinateFromView:mapView];
+    CLLocation *location = [[CLLocation alloc] initWithLatitude:coor.latitude longitude:coor.longitude];
+    if (longPressPointLocation == nil) {
+        longPressPointLocation = location;
+    }
+    
+    if ([[location timestamp] timeIntervalSinceReferenceDate] - [[longPressPointLocation timestamp] timeIntervalSinceReferenceDate] < 2 && longPressPointLocation != location) {
+        return;
+    }
+    
+    longPressPointLocation = location;
     
     NSLog(@"latitude: %g, logitude: %g", coor.latitude, coor.longitude);
     
@@ -104,20 +146,26 @@
         pointAnnotation.title = [NSString stringWithFormat:@"latitude: %g, logitude: %g", coor.latitude, coor.longitude];
         pointAnnotation.subtitle = address;
         
-        [self centerToWithLocation:placemark.location andRegionRadius:10000];
+//        [self centerToWithLocation:placemark.location andRegionRadius:5000];
         
         dispatch_async(dispatch_get_main_queue(), ^{
             [self->mapView removeAnnotations:[self->mapView annotations]];
             [self->mapView addAnnotation:(id)pointAnnotation];
         });
     }];
-    
+    [manager stopUpdatingLocation];
 }
+
+//MARK: - IBAction Methods
 
 - (IBAction)centerToUserLocationButtonTapped:(id)sender {
     [mapView centerToUserLocation];
+    [mapView removeAnnotations:mapView.annotations];
 }
 
+- (IBAction)directionButtonTapped:(id)sender {
+    
+}
 
 - (void)remoteDataShowingOnTheMap {
     for (LocationModel *data in viewModel.dataSource) {
@@ -138,12 +186,11 @@
             }
             
             if (data.locate == nil) {
-                data.locate = @"No Location";
+                data.locate = @"Honolulu";
             }
             
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self->mapView addAnnotation:[[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:data.creater :data.locate :[UIImage imageNamed:@"house"] at:location.coordinate :address] at:location.coordinate]];
-            });
+            [self->mapView addAnnotation:[[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:data.creater :data.locate :[UIImage imageNamed:@"house"] at:location.coordinate :address] at:location.coordinate]];
+        
         }];
     }
     
@@ -172,12 +219,14 @@
             [manager requestWhenInUseAuthorization];
             break;
         case kCLAuthorizationStatusRestricted:
+            [manager requestWhenInUseAuthorization];
             break;
         case kCLAuthorizationStatusDenied:
             [manager requestWhenInUseAuthorization];
             break;
         case kCLAuthorizationStatusAuthorizedAlways:
         case kCLAuthorizationStatusAuthorizedWhenInUse:
+            [self setupDataSource];
             [manager startUpdatingLocation];
             break;
         default:
@@ -294,7 +343,7 @@
             annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:myAnnotation reuseIdentifier:pointPinID];
             
             annotationView.annotation = myAnnotation;
-            annotationView.animatesDrop = YES;
+//            annotationView.animatesDrop = YES;
             annotationView.canShowCallout = true;
         }
         
@@ -309,15 +358,15 @@
     CLLocationCoordinate2D coordinate = location.coordinate;
     __block NSString *address;
     
-    [mapView removeAnnotation:[[mapView annotations] firstObject]];
+//    [mapView removeAnnotations:mapView.annotations];
     
     [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
         address = [placemark completeAddress];
         
-        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:@"107 Coffee Dessert" :@"Tina's cafe, Welcome!!" :[UIImage imageNamed:@"cafe"] at:coordinate :address] at:coordinate];
+//        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:@"107 Coffee Dessert" :@"Tina's cafe, Welcome!!" :[UIImage imageNamed:@"cafe"] at:coordinate :address] at:coordinate];
         
         [self centerToWithLocation:location andRegionRadius:10000];
-        [mapView addAnnotation:(id)annotation];
+//        [mapView addAnnotation:(id)annotation];
         
     }];
     
@@ -325,9 +374,10 @@
 
 //MARK: - Handle Map Search Delegate Methods
 
-- (void)dropPinZoomInPlaceMark:(MKMapItem *)mapItem {
+- (void)dropPinZoomInMapItem:(MKMapItem *)mapItem {
 //    selectedPin = placeMark;
-    [mapView removeAnnotations:mapView.annotations];
+//    [mapView removeAnnotations:mapView.annotations];
+    destinationMapItem = mapItem;
 //    MKPointAnnotation *annotation = [[MKPointAnnotation alloc] init];
 //    annotation.coordinate = placeMark.coordinate;
 //    annotation.title = placeMark.name;
@@ -335,19 +385,17 @@
 //    NSString *state = placeMark.administrativeArea;
 //    annotation.subtitle = [NSString stringWithFormat:@"%@, %@", city, state];
 //    [mapView addAnnotation:annotation];
+    NSString *address = [mapItem.placemark completeAddress];
     
     CLLocationCoordinate2D coordinate = [[mapItem placemark] coordinate];
-    [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
-        NSString *address = [placemark completeAddress];
-
-        dispatch_async(dispatch_get_main_queue(), ^{
-            CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[mapItem name] :[mapItem phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
-
-            [self->mapView addAnnotation:(id)annotation];
-        });
-        }];
     
-    MKCoordinateSpan span = MKCoordinateSpanMake(0.05, 0.05);
+    CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[mapItem name] :[mapItem phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
+    
+    NSLog(@"%@", mapItem.url);
+
+    [self->mapView addAnnotation:(id)annotation];
+    
+    MKCoordinateSpan span = MKCoordinateSpanMake(0.01, 0.01);
     [mapView setRegion:MKCoordinateRegionMake(coordinate, span) animated:YES];
 }
 
@@ -369,6 +417,10 @@
         default:
             break;
     }
+}
+
+- (void)searchBarCancelButtonClicked:(UISearchBar *)searchBar {
+    [mapView removeAnnotations:mapView.annotations];
 }
 //- (void)searchBar:(UISearchBar *)searchBar textDidChange:(NSString *)searchText {
 //    if (!(waitingblock == nil)) {
@@ -408,32 +460,32 @@
 //
 
 
-//- (void)performSearchByUsing: (NSString *)searchText {
-//    [item removeAllObjects];
-//    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
-//    request.naturalLanguageQuery = searchText;
-//    request.region = [mapView region];
-//    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
-//    [search startWithCompletionHandler:^(MKLocalSearchResponse * _Nullable response, NSError * _Nullable error) {
-//        if (error == nil && !([[response mapItems] count] == 0)) {
-//
-//            NSLog(@"%lu", (unsigned long)[[response mapItems] count]);
-//
-//            for (id object in [response mapItems]) {
-//                CLLocationCoordinate2D coordinate = [[object placemark] coordinate];
-//                [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
-//                    NSString *address = [placemark completeAddress];
-//
-//                    dispatch_async(dispatch_get_main_queue(), ^{
-//                        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[object name] :[object phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
-//
-//                        [self->mapView addAnnotation:(id)annotation];
-//                    });
-//                }];
-//            }
-//        }
-//    }];
-//}
+- (void)performSearchByUsing: (NSString *)searchText {
+    [item removeAllObjects];
+    MKLocalSearchRequest *request = [[MKLocalSearchRequest alloc] init];
+    request.naturalLanguageQuery = searchText;
+    request.region = [mapView region];
+    MKLocalSearch *search = [[MKLocalSearch alloc] initWithRequest:request];
+    [search startWithCompletionHandler:^(MKLocalSearchResponse * _Nullable response, NSError * _Nullable error) {
+        if (error == nil && !([[response mapItems] count] == 0)) {
+
+            NSLog(@"%lu", (unsigned long)[[response mapItems] count]);
+
+            for (id object in [response mapItems]) {
+                CLLocationCoordinate2D coordinate = [[object placemark] coordinate];
+                [self reverseGeocoderBetweenLocationAndAddressWithCoordinate:coordinate orAddress:nil completeHander:^(CLPlacemark *placemark) {
+                    NSString *address = [placemark completeAddress];
+
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        CustomAnnotation *annotation = [[CustomAnnotation alloc] initWithViewModel:[[CustomCalloutModel alloc] init:[object name] :[object phoneNumber] :[UIImage imageNamed:@"house"] at:coordinate :address] at:coordinate];
+
+                        [self->mapView addAnnotation:(id)annotation];
+                    });
+                }];
+            }
+        }
+    }];
+}
 
 @end
 

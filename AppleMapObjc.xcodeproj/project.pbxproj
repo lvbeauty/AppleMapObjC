@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2407D41D24E1AFBD005F514C /* TestLocations.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 2407D41C24E1AFBC005F514C /* TestLocations.gpx */; };
+		2407D41F24E1AFC3005F514C /* Apple.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 2407D41E24E1AFC3005F514C /* Apple.gpx */; };
+		2407D42124E1AFC9005F514C /* Google.gpx in Resources */ = {isa = PBXBuildFile; fileRef = 2407D42024E1AFC9005F514C /* Google.gpx */; };
+		2407D42724E1B18E005F514C /* RegionMonitorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2407D42624E1B18E005F514C /* RegionMonitorViewController.m */; };
+		2407D42A24E1B4BD005F514C /* GeofenceAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2407D42924E1B4BD005F514C /* GeofenceAnnotation.m */; };
+		2407D42C24E20347005F514C /* SearchCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2407D42B24E20347005F514C /* SearchCalloutView.xib */; };
 		2471069224BA8FB200AA12C5 /* CustomAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2471069124BA8FB200AA12C5 /* CustomAnnotationView.m */; };
 		2471069524BA8FD700AA12C5 /* CustomCalloutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2471069424BA8FD700AA12C5 /* CustomCalloutView.m */; };
 		2471069724BA8FEF00AA12C5 /* CustomCalloutView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2471069624BA8FEF00AA12C5 /* CustomCalloutView.xib */; };
@@ -30,6 +36,14 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2407D41C24E1AFBC005F514C /* TestLocations.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = TestLocations.gpx; sourceTree = "<group>"; };
+		2407D41E24E1AFC3005F514C /* Apple.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Apple.gpx; sourceTree = "<group>"; };
+		2407D42024E1AFC9005F514C /* Google.gpx */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Google.gpx; sourceTree = "<group>"; };
+		2407D42524E1B18E005F514C /* RegionMonitorViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RegionMonitorViewController.h; sourceTree = "<group>"; };
+		2407D42624E1B18E005F514C /* RegionMonitorViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RegionMonitorViewController.m; sourceTree = "<group>"; };
+		2407D42824E1B4BD005F514C /* GeofenceAnnotation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = GeofenceAnnotation.h; sourceTree = "<group>"; };
+		2407D42924E1B4BD005F514C /* GeofenceAnnotation.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GeofenceAnnotation.m; sourceTree = "<group>"; };
+		2407D42B24E20347005F514C /* SearchCalloutView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SearchCalloutView.xib; sourceTree = "<group>"; };
 		2471069024BA8FB200AA12C5 /* CustomAnnotationView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomAnnotationView.h; sourceTree = "<group>"; };
 		2471069124BA8FB200AA12C5 /* CustomAnnotationView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CustomAnnotationView.m; sourceTree = "<group>"; };
 		2471069324BA8FD700AA12C5 /* CustomCalloutView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CustomCalloutView.h; sourceTree = "<group>"; };
@@ -88,6 +102,8 @@
 			children = (
 				24A123A924B63A600062806A /* CustomAnnotation.h */,
 				24A123AA24B63A600062806A /* CustomAnnotation.m */,
+				2407D42824E1B4BD005F514C /* GeofenceAnnotation.h */,
+				2407D42924E1B4BD005F514C /* GeofenceAnnotation.m */,
 			);
 			path = Annotation;
 			sourceTree = "<group>";
@@ -107,6 +123,7 @@
 				2471069324BA8FD700AA12C5 /* CustomCalloutView.h */,
 				2471069424BA8FD700AA12C5 /* CustomCalloutView.m */,
 				2471069624BA8FEF00AA12C5 /* CustomCalloutView.xib */,
+				2407D42B24E20347005F514C /* SearchCalloutView.xib */,
 			);
 			path = CalloutView;
 			sourceTree = "<group>";
@@ -143,6 +160,9 @@
 			children = (
 				24AF30E324B36A38009E04F7 /* Assets.xcassets */,
 				24AF30E824B36A38009E04F7 /* Info.plist */,
+				2407D41C24E1AFBC005F514C /* TestLocations.gpx */,
+				2407D41E24E1AFC3005F514C /* Apple.gpx */,
+				2407D42024E1AFC9005F514C /* Google.gpx */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -155,6 +175,8 @@
 				24AF30DE24B36A36009E04F7 /* ViewController.m */,
 				24A7105624E0FE5B00EBAF8D /* TableViewController.h */,
 				24A7105724E0FE5B00EBAF8D /* TableViewController.m */,
+				2407D42524E1B18E005F514C /* RegionMonitorViewController.h */,
+				2407D42624E1B18E005F514C /* RegionMonitorViewController.m */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -304,6 +326,7 @@
 				TargetAttributes = {
 					24AF30D324B36A36009E04F7 = {
 						CreatedOnToolsVersion = 11.5;
+						LastSwiftMigration = 1150;
 					};
 				};
 			};
@@ -331,9 +354,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				2471069724BA8FEF00AA12C5 /* CustomCalloutView.xib in Resources */,
+				2407D42C24E20347005F514C /* SearchCalloutView.xib in Resources */,
 				24AF30E724B36A38009E04F7 /* LaunchScreen.storyboard in Resources */,
 				24746DA424BBC99400F879D6 /* README.md in Resources */,
 				24AF30E424B36A38009E04F7 /* Assets.xcassets in Resources */,
+				2407D42124E1AFC9005F514C /* Google.gpx in Resources */,
+				2407D41F24E1AFC3005F514C /* Apple.gpx in Resources */,
+				2407D41D24E1AFBD005F514C /* TestLocations.gpx in Resources */,
 				24AF30E224B36A36009E04F7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -349,7 +376,9 @@
 				24A7105C24E1332200EBAF8D /* MKMapView+Category.m in Sources */,
 				24746DA224BBA08500F879D6 /* LocationModel.m in Sources */,
 				24A123AB24B63A600062806A /* CustomAnnotation.m in Sources */,
+				2407D42724E1B18E005F514C /* RegionMonitorViewController.m in Sources */,
 				2471069224BA8FB200AA12C5 /* CustomAnnotationView.m in Sources */,
+				2407D42A24E1B4BD005F514C /* GeofenceAnnotation.m in Sources */,
 				24746D9A24BB982800F879D6 /* ServiceManager.m in Sources */,
 				24A7105824E0FE5B00EBAF8D /* TableViewController.m in Sources */,
 				2471069524BA8FD700AA12C5 /* CustomCalloutView.m in Sources */,
@@ -499,14 +528,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = ObjectiveCDemo/Support/Info.plist;
+				INFOPLIST_FILE = AppleMapObjc/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Tong.storyBoard.ObjectiveCDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppleMapObjc/View/Annotation/AppleMapObjc-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -515,14 +548,17 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				INFOPLIST_FILE = ObjectiveCDemo/Support/Info.plist;
+				INFOPLIST_FILE = AppleMapObjc/Support/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.Tong.storyBoard.ObjectiveCDemo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "AppleMapObjc/View/Annotation/AppleMapObjc-Bridging-Header.h";
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

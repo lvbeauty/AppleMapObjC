@@ -60,7 +60,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     MKMapItem *selectItem = [matchingItems objectAtIndex:indexPath.row];
-    [_delegate dropPinZoomInPlaceMark:selectItem];
+    [_delegate dropPinZoomInMapItem:selectItem];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
