@@ -28,7 +28,9 @@ Code update: Aug 10
     17.MVVM,
     18.web service
     19.long press gesture
-    20.etc, a bunch of things
+    20.Notification
+    21.Region Monitoring
+    22.etc, a bunch of things
         
 Future Work
 
